@@ -32,6 +32,16 @@ def get_sunrise_and_sunset_hours():
     return sunrise_hour, sunset_hour
 
 
+def is_iss_overhead():
+    iss_latitude = iss_position[0]
+    iss_longitude = iss_position[1]
+
+    # check if ISS latitude & longitude are within 5 degrees of my latitude & longitude
+    if (MY_LATITUDE - 5) <= iss_latitude <= (MY_LATITUDE + 5):
+        if (MY_LONGITUDE - 5) <= iss_longitude <= (MY_LONGITUDE + 5):
+            return True
+
+
 iss_position = get_current_iss_position()
 
 current_time = dt.now()
