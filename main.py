@@ -40,4 +40,4 @@ def is_night():
 if is_iss_overhead() and is_night():
     print("Look up!")
 else:
-    print("Not today.")
+    print("The ISS is not visible from your location at the moment.")
