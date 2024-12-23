@@ -16,22 +16,6 @@ def get_current_iss_position():
     return iss_longitude, iss_latitude
 
 
-def get_sunrise_and_sunset_hours():
-    parameters = {
-        "lat": MY_LATITUDE,
-        "lng": MY_LONGITUDE,
-        "formatted": 0,
-    }
-
-    response = requests.get("https://api.sunrise-sunset.org/json", params=parameters)
-    response.raise_for_status()
-    data = response.json()
-    sunrise_hour = int(data["results"]["sunrise"].split("T")[1].split(":")[0])
-    sunset_hour = int(data["results"]["sunset"].split("T")[1].split(":")[0])
-
-    return sunrise_hour, sunset_hour
-
-
 def is_iss_overhead():
     iss_latitude = iss_position[0]
     iss_longitude = iss_position[1]
@@ -42,6 +26,22 @@ def is_iss_overhead():
             return True
 
 
-iss_position = get_current_iss_position()
+def is_night():
+    parameters = {
+        "lat": MY_LATITUDE,
+        "lng": MY_LONGITUDE,
+        "formatted": 0,
+    }
+    response = requests.get("https://api.sunrise-sunset.org/json", params=parameters)
+    response.raise_for_status()
+    data = response.json()
+    sunrise_hour = int(data["results"]["sunrise"].split("T")[1].split(":")[0])
+    sunset_hour = int(data["results"]["sunset"].split("T")[1].split(":")[0])
 
-current_time = dt.now()
+    current_hour = dt.now().hour
+
+    if current_hour <= sunrise_hour or current_hour >= sunset_hour:
+        return True
+
+
+iss_position = get_current_iss_position()
