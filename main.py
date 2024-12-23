@@ -10,8 +10,8 @@ def get_current_iss_position():
     response.raise_for_status()
     data = response.json()
 
-    iss_longitude = data["iss_position"]["longitude"]
-    iss_latitude = data["iss_position"]["latitude"]
+    iss_longitude = float(data["iss_position"]["longitude"])
+    iss_latitude = float(data["iss_position"]["latitude"])
 
     return iss_longitude, iss_latitude
 
@@ -26,8 +26,8 @@ def get_sunrise_and_sunset_hours():
     response = requests.get("https://api.sunrise-sunset.org/json", params=parameters)
     response.raise_for_status()
     data = response.json()
-    sunrise_hour = data["results"]["sunrise"].split("T")[1].split(":")[0]
-    sunset_hour = data["results"]["sunset"].split("T")[1].split(":")[0]
+    sunrise_hour = int(data["results"]["sunrise"].split("T")[1].split(":")[0])
+    sunset_hour = int(data["results"]["sunset"].split("T")[1].split(":")[0])
 
     return sunrise_hour, sunset_hour
 
