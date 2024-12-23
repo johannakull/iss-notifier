@@ -5,20 +5,13 @@ MY_LATITUDE = 51.507351
 MY_LONGITUDE = -0.127758
 
 
-def get_current_iss_position():
+def is_iss_overhead():
     response = requests.get(url="http://api.open-notify.org/iss-now.json")
     response.raise_for_status()
     data = response.json()
 
-    iss_longitude = float(data["iss_position"]["longitude"])
     iss_latitude = float(data["iss_position"]["latitude"])
-
-    return iss_longitude, iss_latitude
-
-
-def is_iss_overhead():
-    iss_latitude = iss_position[0]
-    iss_longitude = iss_position[1]
+    iss_longitude = float(data["iss_position"]["longitude"])
 
     # check if ISS latitude & longitude are within 5 degrees of my latitude & longitude
     if (MY_LATITUDE - 5) <= iss_latitude <= (MY_LATITUDE + 5):
@@ -43,8 +36,6 @@ def is_night():
     if current_hour <= sunrise_hour or current_hour >= sunset_hour:
         return True
 
-
-iss_position = get_current_iss_position()
 
 if is_iss_overhead() and is_night():
     print("Look up!")
