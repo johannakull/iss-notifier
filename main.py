@@ -45,3 +45,8 @@ def is_night():
 
 
 iss_position = get_current_iss_position()
+
+if is_iss_overhead() and is_night():
+    print("Look up!")
+else:
+    print("Not today.")
