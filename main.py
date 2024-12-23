@@ -6,6 +6,8 @@ MY_LONGITUDE = -0.127758
 
 
 def is_iss_overhead():
+    """Compares ISS coordinates to user's coordinates and returns True if they are within 5 degrees longitude and
+    latitude of each other"""
     response = requests.get(url="http://api.open-notify.org/iss-now.json")
     response.raise_for_status()
     data = response.json()
@@ -20,6 +22,7 @@ def is_iss_overhead():
 
 
 def is_night():
+    """Returns True if current time is before sunrise or after sunset at user's coordinates"""
     parameters = {
         "lat": MY_LATITUDE,
         "lng": MY_LONGITUDE,
